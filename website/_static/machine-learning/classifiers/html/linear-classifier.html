@@ -7,7 +7,7 @@
 <div id="plot"></div>
 
 <script>
-    let points = Array.from({length: 10}, () => [Math.random() *2 - 1, Math.random()*2 - 1]);
+    let points = Array.from({length: 10}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
     let theta = [.5, .5];
     let dragging = false;
 
@@ -24,7 +24,8 @@
             text: classifications[i] > 0 ? '+' : '-',
             textposition: 'top center',
             name: '',
-            marker: {size: 10, color: classifications[i] > 0 ? 'blue' : 'red'}
+            marker: {size: 10, color: classifications[i] > 0 ? 'blue' : 'red'},
+            showlegend: false
         }));
 
         // Faint vectors from origin to points
@@ -47,9 +48,9 @@
             y: [0, theta[1]],
             mode: 'lines+markers+text',
             line: {width: 4, color: 'blue'},
-            name: 'Theta',
-            text: '\u03B8',
-            textposition: 'top center',
+            name: '',
+            text: ['', '\u03B8'],
+            textposition: ['top center', 'top right'],
             textfont: {size: 24}
 
         });
@@ -58,8 +59,8 @@
             title: '',
             xaxis: {range: [-1, 1], showgrid: false, zeroline: false, visible: false},
             yaxis: {range: [-1, 1], showgrid: false, zeroline: false, visible: false},
-            height: '100vh',
-            width: '100vw',
+            height: '500',
+            width: '500',
             dragmode: false,
             showlegend: false,
 
@@ -73,9 +74,9 @@
         let graphDiv = document.querySelector('.draglayer.cursor-crosshair');
         let rect = graphDiv.getBoundingClientRect();
         let _x = event.clientX - rect.left - rect.width / 2
-        let x = _x / rect.width
+        let x = _x * 2 / rect.width
         let _y = event.clientY - rect.top - rect.height / 2
-        let y = -_y / rect.height
+        let y = -_y * 2 / rect.height
         theta[0] = x;
         theta[1] = y;
         createFigure(theta);
@@ -86,9 +87,9 @@
             let graphDiv = document.querySelector('.draglayer.cursor-crosshair');
             let rect = graphDiv.getBoundingClientRect();
             let _x = event.clientX - rect.left - rect.width / 2
-            let x = _x/ rect.width
+            let x = _x * 2 / rect.width
             let _y = event.clientY - rect.top - rect.height / 2
-            let y = -_y / rect.height
+            let y = -_y * 2 / rect.height
             theta[0] = x;
             theta[1] = y;
             createFigure(theta);
