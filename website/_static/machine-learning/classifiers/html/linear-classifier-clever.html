@@ -8,9 +8,13 @@
 <div id="tries">Tries: 0</div>
 
 <script>
-    let points = Array.from({length: 20}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
-    let theta = [.5, .5];
-    let theta_correct = [.7, .2]
+    let points, theta, theta_correct;
+
+    function initialize() {
+        points = Array.from({length: 20}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
+        theta = [-0.5, -0.5]; // Initialized to zero for Perceptron Learning
+        theta_correct = [Math.random(), Math.random()];
+    }
 
     function classifyPoints(theta, points) {
         return points.map(p => Math.sign(p[0] * theta[0] + p[1] * theta[1]));
@@ -22,17 +26,9 @@
         let colors = [];
         for (let i = 0; i < classifications.length; i++) {
             if (classifications[i] === classification_correct[i]) {
-                if (classification_correct[i] > 0) {
-                   colors.push('#0f0')
-                } else {
-                    colors.push('#f00')
-                }
+                colors.push(classification_correct[i] > 0 ? '#0f0' : '#f00');
             } else {
-                if (classification_correct[i] > 0) {
-                   colors.push('#0f03')
-                } else {
-                    colors.push('#f003')
-                }
+                colors.push(classification_correct[i] > 0 ? '#0f03' : '#f003');
             }
         }
         let traces = points.map((p, i) => ({
@@ -61,10 +57,7 @@
             text: ['', '\u03B8'],
             textposition: ['top center', 'top right'],
             textfont: {size: 24}
-
         });
-
-
 
         let layout = {
             title: '',
@@ -74,39 +67,49 @@
             width: '500',
             dragmode: false,
             showlegend: false,
-
-
         };
 
         Plotly.newPlot('plot', traces, layout, {displayModeBar: false});
     }
 
-    let button = document.createElement('button')
-    button.onclick = function () {
-        let tries = 0
-    // Reinitialize points and theta_correct on each click
-    points = Array.from({length: 20}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
-    theta_correct = [Math.random(), Math.random()]; // Ensure a new correct theta each time
-
-    let intervall_id = window.setInterval(function () {
-        tries++;
-        document.getElementById('tries').innerText = "Tries: " + tries;
-        theta = [Math.random() -.5, Math.random()-.5];
+    function perceptronLearning() {
+        let tries = 0;
+        initialize();
         createFigure(theta, theta_correct, points);
-        let classifications = classifyPoints(theta, points);
-        if (classifications.every((c, i) => c === classifyPoints(theta_correct, points)[i])) {
-            document.getElementById('tries').innerText = `Correct after ${tries} tries!`;
-            clearInterval(intervall_id);
-        }
-    }, 1500);
-};
+        window.setTimeout(() => {
+
+        let interval_id = window.setInterval(function () {
+            tries++;
+            document.getElementById('tries').innerText = "Tries: " + tries;
+
+            for (let i = 0; i < points.length; i++) {
+                let prediction = Math.sign(points[i][0] * theta[0] + points[i][1] * theta[1]);
+                let actual = Math.sign(points[i][0] * theta_correct[0] + points[i][1] * theta_correct[1]);
+                if (prediction !== actual) {
+                    theta[0] += actual * points[i][0];
+                    theta[1] += actual * points[i][1];
+                }
+            }
+
+            createFigure(theta, theta_correct, points);
+            let classifications = classifyPoints(theta, points);
+            if (classifications.every((c, i) => c === classifyPoints(theta_correct, points)[i])) {
+                document.getElementById('tries').innerText = `Correct after ${tries} tries!`;
+                clearInterval(interval_id);
+            }
+        }, 500);
+    }, 500);
+    }
+
+    let button = document.createElement('button');
+    button.onclick = perceptronLearning;
     button.innerHTML = 'Start';
     button.style.position = 'absolute';
     button.style.left = '250px';
     button.style.transform = 'translateX(-50%)';
     document.body.appendChild(button);
-    points = Array.from({length: 0}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95])
 
+    initialize();
     createFigure(theta, theta_correct, points);
 </script>
 </body>
