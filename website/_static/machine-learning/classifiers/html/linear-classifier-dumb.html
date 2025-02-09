@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+<div id="plot"></div>
+<div id="tries">Tries: 0</div>
+
+<script>
+    let points = Array.from({length: 20}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
+    let theta = [.5, .5];
+    let theta_correct = [.7, .2]
+
+    function classifyPoints(theta, points) {
+        return points.map(p => Math.sign(p[0] * theta[0] + p[1] * theta[1]));
+    }
+
+    function createFigure(theta, theta_correct, points) {
+        let classifications = classifyPoints(theta, points);
+        let classification_correct = classifyPoints(theta_correct, points);
+        let colors = [];
+        for (let i = 0; i < classifications.length; i++) {
+            if (classifications[i] === classification_correct[i]) {
+                if (classification_correct[i] > 0) {
+                   colors.push('#0f0')
+                } else {
+                    colors.push('#f00')
+                }
+            } else {
+                if (classification_correct[i] > 0) {
+                   colors.push('#0f03')
+                } else {
+                    colors.push('#f003')
+                }
+            }
+        }
+        let traces = points.map((p, i) => ({
+            x: [p[0]],
+            y: [p[1]],
+            mode: 'markers+text',
+            text: classification_correct[i] > 0 ? '+' : '-',
+            textposition: 'top center',
+            name: '',
+            marker: {size: 10, color: colors[i]},
+            showlegend: false
+        }));
+
+        // Faint vectors from origin to points
+        points.forEach(p => {
+            traces.push({
+                x: [0, p[0]],
+                y: [0, p[1]],
+                mode: 'lines',
+                name: '',
+                line: {width: 1, color: 'gray', dash: 'dot'},
+                showlegend: false
+            });
+        });
+
+        let x_vals = [-1, 1];
+        let y_vals = theta[1] !== 0 ? x_vals.map(x => -(theta[0] / theta[1]) * x) : [-1, 1];
+        traces.push({x: x_vals, y: y_vals, mode: 'lines', name: 'Guess'});
+        traces.push({
+            x: [0, theta[0]],
+            y: [0, theta[1]],
+            mode: 'lines+markers+text',
+            line: {width: 4, color: 'blue'},
+            name: '',
+            text: ['', '\u03B8'],
+            textposition: ['top center', 'top right'],
+            textfont: {size: 24}
+
+        });
+
+        let y_vals_correct = theta_correct[1] !== 0 ? x_vals.map(x => - (theta_correct[0] / theta_correct[1]) * x) : [-1, 1];
+        traces.push({x: x_vals, y: y_vals_correct, mode: 'lines', name: 'Correct', line: {color: 'lightgray'}});
+
+        let layout = {
+            title: '',
+            xaxis: {range: [-1, 1], showgrid: false, zeroline: false, visible: false},
+            yaxis: {range: [-1, 1], showgrid: false, zeroline: false, visible: false},
+            height: '500',
+            width: '500',
+            dragmode: false,
+            showlegend: false,
+
+
+        };
+
+        Plotly.newPlot('plot', traces, layout, {displayModeBar: false});
+    }
+
+    let button = document.createElement('button')
+    button.onclick = function () {
+        let tries = 0
+    // Reinitialize points and theta_correct on each click
+    points = Array.from({length: 20}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95]);
+    theta_correct = [Math.random(), Math.random()]; // Ensure a new correct theta each time
+
+    let intervall_id = window.setInterval(function () {
+        tries++;
+        document.getElementById('tries').innerText = "Tries: " + tries;
+        theta = [Math.random() -.5, Math.random()-.5];
+        createFigure(theta, theta_correct, points);
+        let classifications = classifyPoints(theta, points);
+        if (classifications.every((c, i) => c === classifyPoints(theta_correct, points)[i])) {
+            document.getElementById('tries').innerText = `Correct after ${tries} tries!`;
+            clearInterval(intervall_id);
+        }
+    }, 1500);
+};
+    button.innerHTML = 'Start';
+    button.style.position = 'absolute';
+    button.style.left = '250px';
+    button.style.transform = 'translateX(-50%)';
+    document.body.appendChild(button);
+    points = Array.from({length: 0}, () => [Math.random() * 1.9 - .95, Math.random() * 1.9 - .95])
+
+    createFigure(theta, theta_correct, points);
+</script>
+</body>
+</html>
