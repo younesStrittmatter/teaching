@@ -47,20 +47,23 @@
         }));
 
         // Faint vectors from origin to points
-        points.forEach(p => {
-            traces.push({
-                x: [0, p[0]],
-                y: [0, p[1]],
-                mode: 'lines',
-                name: '',
-                line: {width: 1, color: 'gray', dash: 'dot'},
-                showlegend: false
-            });
-        });
+        // points.forEach(p => {
+        //     traces.push({
+        //         x: [0, p[0]],
+        //         y: [0, p[1]],
+        //         mode: 'lines',
+        //         name: '',
+        //         line: {width: 1, color: 'gray', dash: 'dot'},
+        //         showlegend: false
+        //     });
+        // });
 
         let x_vals = [-1, 1];
+        let y_vals_correct = theta_correct[1] !== 0 ? x_vals.map(x => - (theta_correct[0] / theta_correct[1]) * x) : [-1, 1];
+        traces.push({x: x_vals, y: y_vals_correct, mode: 'lines', name: 'Correct', line: {color: 'lightgray'}});
         let y_vals = theta[1] !== 0 ? x_vals.map(x => -(theta[0] / theta[1]) * x) : [-1, 1];
-        traces.push({x: x_vals, y: y_vals, mode: 'lines', name: 'Guess'});
+
+        traces.push({x: x_vals, y: y_vals, mode: 'lines', name: 'Guess', line: {color: 'blue'}});
         traces.push({
             x: [0, theta[0]],
             y: [0, theta[1]],
@@ -73,8 +76,7 @@
 
         });
 
-        let y_vals_correct = theta_correct[1] !== 0 ? x_vals.map(x => - (theta_correct[0] / theta_correct[1]) * x) : [-1, 1];
-        traces.push({x: x_vals, y: y_vals_correct, mode: 'lines', name: 'Correct', line: {color: 'lightgray'}});
+
 
         let layout = {
             title: '',
