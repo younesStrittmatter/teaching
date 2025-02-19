@@ -7,3 +7,4 @@ parts:
 - caption: Machine Learning
   chapters:
   - file: content/machine-learning/Classifiers
+  - file: content/machine-learning/reinforcement-learning/TD-Table

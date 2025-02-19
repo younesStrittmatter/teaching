@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Editable Table</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            font-size: 14pt;
+            text-align: center;
+
+        }
+
+        #title {
+            text-align: center;
+            margin: 10px;
+            line-height: 18pt;
+            background: #eee;
+        }
+
+
+        #outerTable {
+            border-collapse: collapse;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Ensure inner tables are centered */
+        #outerTable td {
+            vertical-align: middle; /* Centers vertically */
+            text-align: center; /* Centers inline content */
+        }
+
+        .innerTable {
+            margin: auto; /* Centers horizontally */
+            display: table; /* Ensures it's treated as a table */
+
+        }
+
+        .newValue, .delta {
+            background: #eee;
+        }
+
+        .innerTable td {
+            padding: 10px;
+        }
+
+
+        #outerTable > tbody > tr > th,
+        #outerTable > tbody > tr > td {
+            box-sizing: border-box;
+            border: 1pt solid grey; /* Border for outer table cells only */
+            text-align: center;
+        }
+
+
+        .label {
+
+        }
+
+        .inpt {
+
+        }
+
+        input {
+
+            width: 50pt;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+<div id="title">
+    \( W_{new}(t-1) = W_{old}(t-1) + \alpha \delta(t) \) (Tempral Difference Learning Update Rule) <br>
+    \( \delta(t) = r(t) + W_{old}(t) - W_{old}(t-1) \) (Prediction Error)
+</div>
+<table id="outerTable">
+    <thead>
+    <tr>
+        <th>State/ Time Step \((t)\)</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+    </tr>
+    <tbody>
+    <tr>
+        <th>Stimulus (Reward)</th>
+        <td>🚪 \[ r(1) = 0 \]</td>
+        <td>🔔 \[ r(2) = 0 \]</td>
+        <td>🕑 \[ r(3) = 0 \]</td>
+        <td>🍩 \[ r(4) = 1 \]</td>
+
+    </tr>
+    <tr>
+        <th>Trial 0</th>
+        <td>\( W(1) = 0 \)</td>
+        <td>\( W(1) = 0 \)</td>
+        <td>\( W(2) = 0 \)</td>
+        <td>\( W(3) = 0 \)</td>
+    </tr>
+    <tr>
+        <th>Trial 1</th>
+        <td id="1_1"></td>
+        <td id="1_2"></td>
+        <td id="1_3"></td>
+        <td id="1_4"></td>
+    </tr>
+    <tr>
+        <th>Trial 2</th>
+        <td id="2_1"></td>
+        <td id="2_2"></td>
+        <td id="2_3"></td>
+        <td id="2_4"></td>
+
+    </tr>
+    <tr>
+        <th>Trial 3</th>
+        <td id="3_1"></td>
+        <td id="3_2"></td>
+        <td id="3_3"></td>
+        <td id="3_4"></td>
+    </tr>
+    <tr>
+        <th>Trial 4</th>
+        <td id="4_1"></td>
+        <td id="4_2"></td>
+        <td id="4_3"></td>
+        <td id="4_4"></td>
+    </tr>
+    <tr>
+        <th>Trial 5</th>
+        <td id="5_1"></td>
+        <td id="5_2"></td>
+        <td id="5_3"></td>
+        <td id="5_4"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<script>
+    function valueToHexG(value) {
+        value = Math.max(0, Math.min(1, value)); // Ensure value is between 0 and 1
+
+        // Interpolate between white (255, 255, 255) and green (0, 255, 0)
+        let r = Math.round(255 * (1 - value)); // Red decreases from 255 to 0
+        let g = 255; // Green stays at 255
+        let b = Math.round(255 * (1 - value)); // Blue decreases from 255 to 0
+
+        // Convert to hex format
+        return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+    }
+    function valueToHexR(value) {
+        value = Math.max(0, Math.min(1, value)); // Ensure value is between 0 and 1
+
+        // Interpolate between white (255, 255, 255) and green (0, 255, 0)
+        let g = Math.round(255 * (1 - value)); // Red decreases from 255 to 0
+        let r = 255; // Green stays at 255
+        let b = Math.round(255 * (1 - value)); // Blue decreases from 255 to 0
+
+        // Convert to hex format
+        return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${b.toString(16).padStart(2, "0")}`;
+    }
+
+    // Example Usage:
+    // console.log(valueToHex(0));   // "#FFFFFF" (White)
+    // console.log(valueToHex(0.5)); // "#80FF80" (Light Green)
+    // console.log(valueToHex(1));   // "#00FF00" (Full Green)
+
+
+    for (let i = 1; i < 5; i++) {
+        for (let j = 1; j < 6; j++) {
+            let cell = `<table id="t_${i}_${j}" class="innerTable">`
+            cell += `<tr id="w_n_r_${i}_${j}">`
+            cell += `<td colspan="2" id="w_n_${i}_${j}" class="newValue">\\( W_{new}(${i}) \\) = \\( W_{old}(${i}) + \\alpha \\delta(${i}) \\)</td>`
+            cell += '</tr>'
+            cell += `<tr>`
+            cell += `<td colspan="2" id="delta_${i}_${j}" class="delta">\\( \\delta(${i}) = r(${i + 1}) + W_{old}(${i + 1}) - W_{old}(${i}) \\)</td>`
+            cell += '</tr>'
+            cell += `<tr id="tr_1_${i}_${j}">`
+            cell += `<td class="label" id="w_o_${i}_${j}_label">\\( W_{old}(${i}) \\)</td><td class="inpt"><input type="text"  id="w_o_${i}_${j}"></td>`
+            cell += '</tr>'
+            cell += `<tr id="tr_2_${i}_${j}">`
+            cell += `<td class="label" id="r_${i}_${j}_label">\\( r(${i + 1}) \\)</td><td class="inpt"><input type="text" id="r_${i}_${j}"></td>`
+            cell += '</tr>'
+            cell += `<tr id="tr_3_${i}_${j}">`
+            cell += `<td class="label" id="w_op_${i}_${j}_label">\\(  W_{old}(${i + 1}) \\)</td><td class="inpt"><input type="text" id="w_op_${i}_${j}"></td>`
+            cell += '</tr>'
+            cell += '</table>'
+            document.getElementById(`${j}_${i}`).innerHTML = cell
+        }
+    }
+
+    for (let i = 1; i < 5; i++) {
+        for (let j = 1; j < 6; j++) {
+            if (!(i === 1 && j === 1)) {
+                document.getElementById(`t_${i}_${j}`).style.visibility = 'hidden'
+            }
+        }
+    }
+
+    let state_i = 1
+    let state_j = 1
+
+    const state_correct = [[
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 1, 0],
+    ], [
+        [0, 0, 0],
+        [0, 0, .5],
+        [.5, 1, 0]
+    ], [
+        [0, 0, .25],
+        [.25, 0, .75],
+        [.75, 1, 0],
+
+    ], [
+        [.125, 0, .5],
+        [.5, 0, .875],
+        [.875, 1, 0]
+    ], [
+        [.3125, 0, .6875],
+        [.6875, 0, .9375],
+        [.9375, 1, 0]
+    ]
+    ]
+
+    let values = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ]
+    let deltas = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ]
+
+
+    window.oninput = () => {
+        let i = state_i
+        let j = state_j
+        let w_o = document.getElementById(`w_o_${i}_${j}`)
+        let r = document.getElementById(`r_${i}_${j}`)
+        let w_op = document.getElementById(`w_op_${i}_${j}`)
+        let w_o_v = parseFloat(w_o.value)
+        let r_v = parseFloat(r.value)
+        let w_op_v = parseFloat(w_op.value)
+
+
+        if (w_o_v === state_correct[j - 1][i - 1][0] && r_v === state_correct[j - 1][i - 1][1] && w_op_v === state_correct[j - 1][i - 1][2]) {
+            w_o.disabled = true
+            r.disabled = true
+            w_op.disabled = true
+            let next_i = i + 1
+            let next_j = j
+            if (next_i >= 4) {
+                next_i = 1
+                next_j += 1
+                for (let k = 1; k < 5; k++) {
+                    document.getElementById(`w_o_${k}_${j}`).style.display = 'none'
+                    document.getElementById(`r_${k}_${j}`).style.display = 'none'
+                    document.getElementById(`w_op_${k}_${j}`).style.display = 'none'
+                    document.getElementById(`w_o_${k}_${j}_label`).style.display = 'none'
+                    document.getElementById(`r_${k}_${j}_label`).style.display = 'none'
+                    document.getElementById(`w_op_${k}_${j}_label`).style.display = 'none'
+                    document.getElementById(`tr_1_${k}_${j}`).style.display = 'none'
+                    document.getElementById(`tr_2_${k}_${j}`).style.display = 'none'
+                    document.getElementById(`tr_3_${k}_${j}`).style.display = 'none'
+                }
+
+            }
+            let delta = r_v + w_op_v - w_o_v
+            deltas[j - 1][i - 1] = delta
+            let w_n = w_o_v + .5 * (delta)
+            values[j - 1][i - 1] = w_n
+            document.getElementById(`w_n_${i}_${j}`).innerHTML = `\\( W(${i}) = \\) <span style="background: lightgreen">${w_n}</span> \\( = ${w_o_v} + 0.5 * ${delta}\\)`
+            document.getElementById(`delta_${i}_${j}`).innerText = `\\( \\delta(${i}) = ${delta} = ${r_v} + ${w_op_v} - ${w_o_v}\\)`
+            MathJax.typesetPromise();
+            if (next_j > 5) {
+                for (let k = 1; k < 4; k++) {
+                    for (let l = 1; l < 6; l++) {
+                        const delta = deltas[l - 1][k - 1]
+                        const w_n = values[l - 1][k - 1]
+                        // calculate hue based on value
+                        console.log(delta)
+                        console.log(w_n)
+                        const delta_color = valueToHexR(delta)
+                        const w_n_color = valueToHexG(w_n)
+                        console.log(delta_color)
+                        console.log(w_n_color)
+                        let text = `\\( W(${k}) = \\)<span style="background: ${w_n_color}">${w_n}</span><br>`
+                        text += `\\( \\delta(${k}) = \\)<span style="background: ${delta_color}">${delta}</span>`
+                        document.getElementById(`${l}_${k}`).innerHTML = text
+
+                    }
+                }
+                MathJax.typesetPromise();
+                return
+            }
+
+            document.getElementById(`t_${next_i}_${next_j}`).style.visibility = 'visible'
+            w_o.disabled = true
+            r.disabled = true
+            w_op.disabled = true
+
+            state_i = next_i
+            state_j = next_j
+        }
+    }
+
+
+</script>
+</body>
+</html>
