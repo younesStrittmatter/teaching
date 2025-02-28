@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+    <title>1D Gradient Descent</title>
+</head>
+<body>
+
+    <div id="plot" style="width: 500px; height: 500px;"></div>
+
+    <label for="eta">Learning Rate (&#951;):</label>
+    <input type="range" id="eta" min="0.01" max="1.0" step="0.01" value="0.1">
+    <span id="eta-value">0.1</span>
+
+    <br>
+
+    <label for="epsilon">Convergence Tolerance (&#949;):</label>
+    <input type="range" id="epsilon" min="0.001" max="0.1" step="0.001" value="0.01">
+    <span id="epsilon-value">0.01</span>
+
+    <br><br>
+
+    <button id="start">Start Gradient Descent</button>
+
+    <script>
+        // Quadratic function and its derivative
+        function f(theta) {
+            return Math.pow(theta, 2);
+        }
+
+        function f_prime(theta) {
+            return 2 * theta;
+        }
+
+        // Gradient Descent function
+        function gradientDescent(theta_init, eta, epsilon) {
+            let theta = theta_init;
+            let values = [theta];
+            let f_values = [f(theta)];
+            let max_steps = 1000;
+            let i = 0;
+
+            while (true) {
+                i += 1;
+                let gradient = f_prime(theta);
+                let next_theta = theta - eta * gradient;
+
+                values.push(next_theta);
+                f_values.push(f(next_theta));
+
+                if (Math.abs(f(next_theta) - f(theta)) < epsilon || i >= max_steps) {
+                    break;
+                }
+
+                theta = next_theta;
+            }
+
+            return { thetas: values, f_values: f_values };
+        }
+
+        // Update the plot
+        function updatePlot(eta, epsilon) {
+            let theta_init = 5; // Starting point
+            let result = gradientDescent(theta_init, eta, epsilon);
+
+            let theta_values = result.thetas;
+            let f_values = result.f_values;
+
+            // Define the function curve
+            let x = Array.from({ length: 100 }, (_, i) => -5 + i * 0.1);
+            let y = x.map(f);
+
+            // Plot the function and gradient descent steps
+            let data = [
+                {
+                    x: x,
+                    y: y,
+                    type: 'scatter',
+                    mode: 'lines',
+                    name: 'f(θ)',
+                },
+                {
+                    x: theta_values,
+                    y: f_values,
+                    type: 'scatter',
+                    mode: 'markers+lines',
+                    name: 'Gradient Descent Path',
+                }
+            ];
+
+            let layout = {
+                title: '',
+                xaxis: { title: 'θ' },
+                yaxis: { title: 'f(θ)' },
+            };
+
+            Plotly.newPlot('plot', data, layout);
+        }
+
+        // Initial plot
+        let eta = parseFloat(document.getElementById('eta').value);
+        let epsilon = parseFloat(document.getElementById('epsilon').value);
+        updatePlot(eta, epsilon);
+
+        // Update sliders
+        document.getElementById('eta').addEventListener('input', (e) => {
+            eta = parseFloat(e.target.value);
+            document.getElementById('eta-value').textContent = eta;
+        });
+
+        document.getElementById('epsilon').addEventListener('input', (e) => {
+            epsilon = parseFloat(e.target.value);
+            document.getElementById('epsilon-value').textContent = epsilon;
+        });
+
+        // Start gradient descent on button click
+        document.getElementById('start').addEventListener('click', () => {
+            updatePlot(eta, epsilon);
+        });
+    </script>
+</body>
+</html>
