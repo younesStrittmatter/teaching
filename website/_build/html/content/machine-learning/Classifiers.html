@@ -1,0 +1,1271 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1 Classifiers &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=4cf46451" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/machine-learning/Classifiers';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2 Temporal Difference Learning" href="reinforcement-learning/TD-Table.html" />
+    <link rel="prev" title="Teaching Materials" href="../../intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Teaching Materials
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">1 Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reinforcement-learning/TD-Table.html">2 Temporal Difference Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/1%20Counting.html">1 Counting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/2%20Permutations.html">2 Permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/3%20Combinations.html">3 Combinations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/4%20Sorting.html">4 Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/5%20What%20is%20Probability.html">5 What is Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../courses/probability/Games.html">Games</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/machine-learning/Classifiers.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/content/machine-learning/Classifiers.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1 Classifiers</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aristotelian-essentialism">Aristotelian Essentialism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-is-effortless">Classification is Effortless!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-in-a-nutshell">Machine Learning in a nutshell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifying-classifiers">Classifying Classifiers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification">Binary Classification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-feature-representation">Caveat: Feature Representation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-space-hypothesis-class">Solution Space - Hypothesis Class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-a-hypothesis-the-loss-function">Evaluating a Hypothesis: The Loss Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-don-t-overfit">Caveat: Don’t Overfit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-classifiers">Linear Classifiers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-d">Dataset <span class="math notranslate nohighlight">\(D\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-space-mathcal-h">Hypothesis Space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-l">Loss L</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-algorithm-1-dumb-learning">Learning Algorithm 1: Dumb learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-algorithm-2-clever-algorithm-by-a-clever-person">Learning Algorithm 2: Clever Algorithm by a Clever Person</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-as-optimization">Machine Learning as Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descend">Gradient Descend</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-gradient-descent">1 Dimensional Gradient Descent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#n-dimensional-gradient-descent">n Dimensional Gradient Descent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-why">Logistic Regression - Why?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-linear-classifiers-are-not-optimal-nor-optimizable">Why Linear Classifiers are not Optimal (nor Optimizable<span class="math notranslate nohighlight">\(^*\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-don-t-we-really-on-the-perceptron-then">Why don’t we really on the Perceptron then?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-logistic-classifier">Linear Logistic Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-class-mathcal-h">Hypothesis Class <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-l">Loss function <span class="math notranslate nohighlight">\(L\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-linear-separability">Caveat: Linear Separability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neuron">Neuron</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer">Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activation-functions">Activation Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backpropagation">Backpropagation</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="classifiers">
+<h1>1 Classifiers<a class="headerlink" href="#classifiers" title="Link to this heading">#</a></h1>
+<blockquote>
+<div><p><em>Or: What is a chair?</em></p>
+</div></blockquote>
+<p><img alt="title" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/title.png" /></p>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h2>
+<section id="aristotelian-essentialism">
+<h3>Aristotelian Essentialism<a class="headerlink" href="#aristotelian-essentialism" title="Link to this heading">#</a></h3>
+<p>Let’s say we want to classify things in chairs and non-chairs. Wouldn’t it be helpful to first answer the question: What is a chair? Aristotelian essentialism is the philosophical view  that entities possess an intrinsic essence that defines what they are. According to Aristotle, every object or being has a set of necessary properties that make it what it is and distinguish it from what it is not.</p>
+<p><img alt="essentialism" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/essentialism.png" /></p>
+<p>So, let’s define a chair this way:</p>
+<p>A chair is <em><strong>has four legs</strong></em> and <em><strong>one can sit on it</strong></em>.</p>
+<p>Is this definition helpful?</p>
+<style>
+  .scroll-container {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+  }
+
+  .scroll-container img {
+    height: 300px; /* Adjust size as needed */
+    scroll-snap-align: center;
+    border-radius: 8px;
+  }
+</style>
+<div class="scroll-container">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/1.png" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/2.jpg" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/3.jpg" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/4.jpg" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/horse.jpg" alt="Image 1">
+</div><p>A horse <em><strong>has four legs</strong></em> and <em><strong>one can sit on it</strong></em> but a horse is not a chair!</p>
+<p>Can we revise our definition?</p>
+<p>A chair is <em><strong>nonliving</strong></em>, <em><strong>has four legs</strong></em>, and <em><strong>one can sit on it</strong></em>.</p>
+<div class="scroll-container">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/5.png" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/6.png" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/7.png" alt="Image 1">
+  <img src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chairs/5-legged-chair.png" alt="Image 1">
+</div><p>Some chairs have four legs, some have five. Some have three and there are even chairs without legs. The number of legs doesn’t seem to be <em>essential</em> to the definition of a chair.</p>
+<p><img alt="weird-chairs" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/weird-chairs.png" /></p>
+</section>
+<section id="classification-is-effortless">
+<h3>Classification is Effortless!<a class="headerlink" href="#classification-is-effortless" title="Link to this heading">#</a></h3>
+<p>There appears to be a puzzle here. Have you ever mistaken a horse for a chair? If you encountered someone who made such an error, even just once, what advice would you give them?</p>
+<p><img alt="mistake-meme" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/trivial-classification.png" /></p>
+<p>A neurologist would probably diagnose such a person with <a class="reference external" href="https://www.sciencedirect.com/topics/psychology/object-agnosia">visual object agnosia</a>. People seem to classify objects effortless. Remarkably, this ability develops naturally—after all, when was the last time you attended chair-class?</p>
+<p><img alt="chair-class" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/chair-class.png" /></p>
+</section>
+<section id="machine-learning-in-a-nutshell">
+<h3>Machine Learning in a nutshell<a class="headerlink" href="#machine-learning-in-a-nutshell" title="Link to this heading">#</a></h3>
+<p>Directly writing a classifier function seems helpless:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">is_chair</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns True if something is a chair.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">has_legs</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">nr_legs</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">has_flat_surface</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">is_stable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">has_backrest</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+                        <span class="k">if</span> <span class="n">is_comforable_height</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+                            <span class="k">if</span> <span class="n">material</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;wood&#39;</span><span class="p">:</span>
+                                <span class="o">...</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">has_legs</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns true if something has legs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">object</span><span class="o">.</span><span class="n">elements</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_leg</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">true</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">is_leg</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Returns true if something is a leg.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">is_attached_to</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">objects_that_have_legs</span><span class="p">):</span>
+        <span class="o">...</span>
+</pre></div>
+</div>
+<p>Instead of directly writing a function that recognizes a chair, we write an algorithm that <em>learns</em> from data to create a function that recognizes a chair.</p>
+</section>
+</section>
+<section id="classifying-classifiers">
+<h2>Classifying Classifiers<a class="headerlink" href="#classifying-classifiers" title="Link to this heading">#</a></h2>
+<p>To not get lost in the broader landscape of machine learning, we can think about different approaches in terms of key aspects.  These include the type of <em>data</em> they process, the <em>solution space</em> that is considered, the <em>learning algorithm</em> employed, and the methods used to <em>evaluate</em> the resulting function.</p>
+<p>It is important to note that all of these aspects are, to some extent, <em>design choices</em>. While “machine learning” is often perceived as a general-purpose tool that can be applied to almost <em>any</em> problem, its effectiveness depends on careful design decisions.</p>
+<p>The <strong>art of machine learning</strong> involves:</p>
+<ul class="simple">
+<li><p>Choosing an appropriate <strong>feature representation</strong> (i.e., organizing data effectively),</p></li>
+<li><p>Defining a suitable <strong>solution space</strong> (i.e., constraining the problem appropriately),</p></li>
+<li><p>Designing a meaningful <strong>loss function</strong> (i.e., determining how to evaluate solutions), and</p></li>
+<li><p>Selecting an appropriate <strong>learning algorithm</strong> (e.g., formulating the problem as an optimization task to leverage general-purpose optimization methods).</p></li>
+</ul>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">#</a></h3>
+<p>The data used for classifiers is <strong>labeled</strong>, meaning we have examples of objects along with their corresponding category labels. For instance, a dataset might contain images of chairs and non-chairs, each labeled accordingly (e.g., <em>chair</em>, <em>horse</em>, <em>table</em>, <em>plant</em>).</p>
+<p>Mathematically, we can represent a dataset as a set of tuples:</p>
+<div class="math notranslate nohighlight">
+\[
+D = \left\{ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \dots, (x^{(n)}, y^{(n)}) \right\}
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span>  is the dataset containing <span class="math notranslate nohighlight">\(n\)</span> labeled examples,</p></li>
+<li><p><span class="math notranslate nohighlight">\(x^{(i)}\)</span> represents the <strong><span class="math notranslate nohighlight">\(i\)</span>-th input</strong> (e.g., an image or feature vector),</p></li>
+<li><p><span class="math notranslate nohighlight">\(y^{(i)}\)</span> represents the <strong><span class="math notranslate nohighlight">\(i\)</span>-th label</strong> (e.g., “chair” or “horse”).</p></li>
+</ul>
+<p><img alt="chair-class" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/data-word-label.png" /></p>
+<section id="binary-classification">
+<h4>Binary Classification<a class="headerlink" href="#binary-classification" title="Link to this heading">#</a></h4>
+<p>Here, we will specifically introduce <em>binary</em> classifiers. That means we do not want to classify objects into <em>chairs</em>, <em>horses</em>, <em>tables</em>, and <em>plants</em>. Instead, we are only interested in whether something <em>is a chair</em> or <em>is not a chair</em>.</p>
+<p>We can express this by defining the label as either <span class="math notranslate nohighlight">\(-1\)</span> or <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+D = \left\{ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \dots, (x^{(n)}, y^{(n)}) \right\}
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+y^{(i)} \in \{-1, 1\}, \quad \forall i \in \{1, \dots, n\}
+\]</div>
+<p><img alt="chair-class" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/data-label-binary.png" /></p>
+</section>
+<section id="caveat-feature-representation">
+<h4>Caveat: Feature Representation<a class="headerlink" href="#caveat-feature-representation" title="Link to this heading">#</a></h4>
+<p>In the above example, we do not actually classify <em>chairs</em> themselves. Instead, we classify <em>pictures of chairs</em>. In this case, we can use black-and-white images as their <strong>feature representation</strong>. For instance, <span class="math notranslate nohighlight">\(x^{(i)}\)</span> could be a 2D vector of brightness values.</p>
+<p>More generally, we need a function <span class="math notranslate nohighlight">\(\varphi\)</span> that transforms the “real thing” <span class="math notranslate nohighlight">\(x\)</span> into a feature representation <span class="math notranslate nohighlight">\(x^{(i)}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\varphi : x \rightarrow x^{(i)}
+\]</div>
+<p>The feature representation typically consists of list of numbers (vectors or tensors). To keep things short and concise, in this guide, we will primarily work with the feature representation instead of the “real thing” and will sometimes use <span class="math notranslate nohighlight">\(x\)</span> when we actually mean <span class="math notranslate nohighlight">\(x^{(i)}\)</span>. However, it is important to note that using a <em>poorly chosen</em> <span class="math notranslate nohighlight">\(\varphi\)</span> can undermine even the most sophisticated learning algorithm.</p>
+</section>
+</section>
+<section id="solution-space-hypothesis-class">
+<h3>Solution Space - Hypothesis Class<a class="headerlink" href="#solution-space-hypothesis-class" title="Link to this heading">#</a></h3>
+<p>Before finding a specific solution to a given problem, machine learning first requires defining a space of possible solutions. This space is often referred to as the <em>solution space</em>, <em>hypothesis class</em>, or <em>hypothesis space</em>. A single element of this space is called a <em>hypothesis</em>, and a <em>hypothesis</em> that (best) solves the problem is called a <em>solution</em>.</p>
+<p>If you come from a different field, you can think of this as <em>architectural constraints</em> or <em>inductive biases</em>. More formally, the <em>hypothesis space</em> is defined as a parameterized function:</p>
+<div class="math notranslate nohighlight">
+\[
+h \in \mathcal{H}
+\]</div>
+<p>where a specific function <span class="math notranslate nohighlight">\(y\)</span> is given by:</p>
+<div class="math notranslate nohighlight">
+\[
+y = h(x, \theta)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> represents the parameters of the function.</p>
+<p>If you’re having a hard time wrapping your head around this concept, consider the following analogy:</p>
+<p>Imagine you need to tighten a nut. A very broad hypothesis class would be <strong>all tools in my shed.</strong> However, this is too general, and searching through every possible tool would be inefficient. Instead, you can constrain the hypothesis class to <strong>all wrenches.</strong> Now, finding the right tool becomes much easier because you’ve eliminated irrelevant options.</p>
+<p>Additionally, narrowing down the hypothesis class makes it easier to parameterize your choice. Instead of searching through every tool type, you now only need to adjust <em>one parameter</em>—the size of the wrench.</p>
+<p><em><strong>Note:</strong></em> In this example, you could even use a form of gradient descent (we will formally introduce this later) to find the correct wrench size:</p>
+<ul class="simple">
+<li><p>If the wrench is too big, try a smaller one.</p></li>
+<li><p>If the wrench is too small, try a bigger one.</p></li>
+</ul>
+<p>By iteratively refining your choice, you are guaranteed to find the correct solution—provided that the right wrench is available in your shed.</p>
+<p><img alt="wrong-hypothesis" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/hypothesis.png" /></p>
+</section>
+<section id="evaluating-a-hypothesis-the-loss-function">
+<h3>Evaluating a Hypothesis: The Loss Function<a class="headerlink" href="#evaluating-a-hypothesis-the-loss-function" title="Link to this heading">#</a></h3>
+<p>To evaluate a specific guess <span class="math notranslate nohighlight">\(h\)</span> from the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, we introduce the concept of <strong>loss</strong>. Essentially, loss quantifies <em>how bad</em> a given hypothesis <span class="math notranslate nohighlight">\(h\)</span> is at making predictions—it answers the question: <em>How unhappy are we with the answer that <span class="math notranslate nohighlight">\(h\)</span> provides?</em></p>
+<p>Given:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a\)</span> as the <strong>actual label</strong> at <span class="math notranslate nohighlight">\(x\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(g\)</span> as the <strong>prediction</strong> made under the hypothesis <span class="math notranslate nohighlight">\(h\)</span>,</p></li>
+</ul>
+<p>our loss for a specific <span class="math notranslate nohighlight">\(x\)</span> is represented as a function <span class="math notranslate nohighlight">\(L(g, a)\)</span> (or $L(h(x), a). Often, the total loss over all data points is expressed as a <strong>average of individual losses</strong>.</p>
+<p>A key principle in designing loss functions is that we are typically <em>happy</em> when ( g = a ), meaning our prediction is correct. The loss function should reflect this by assigning lower values when predictions are accurate and higher values when they are incorrect.</p>
+<p>However, in this guide, we will not delve into regularization functions in detail.</p>
+<section id="caveat-don-t-overfit">
+<h4>Caveat: Don’t Overfit<a class="headerlink" href="#caveat-don-t-overfit" title="Link to this heading">#</a></h4>
+<p>Loss functions make it clear that our goal is to minimize loss—we certainly don’t want a high loss. However, there are some important subtleties to consider:</p>
+<p>Do we want to minimize the loss function <strong>only on the training data</strong>?<br />
+After all, the function we are searching for shouldn’t just perform well on the data it has already seen and that we have already labeled. If that were the goal, we could simply store all known labels in a dictionary and be done with it.</p>
+<p>But how can we evaluate loss on data that the model hasn’t seen and that we haven’t labeled? That seems impossible, right?</p>
+<p>To address this, we use <strong>proxies</strong>:</p>
+<ol class="arabic">
+<li><p><strong>Training Loss (Training Error):</strong><br />
+The first proxy is the loss computed on the training data:</p>
+<div class="math notranslate nohighlight">
+\[
+   \epsilon_n = \sum_{i=1}^{n} L(h(x^{(i)}), y^{(i)})
+   \]</div>
+<p>This helps guide the learning process by <em>nudging</em> the hypothesis in the right direction.</p>
+</li>
+<li><p><strong>Test Loss (Test Error):</strong><br />
+The second proxy is the loss on a <strong>holdout set</strong>, which consists of labeled data that we intentionally <strong>do not</strong> show the model during training:</p>
+<div class="math notranslate nohighlight">
+\[
+   \epsilon_{\text{test}} = \sum_{i=n+1}^{n'} L(h(x^{(i)}), y^{(i)})
+   \]</div>
+</li>
+</ol>
+<p>This serves as a better approximation of the model’s performance on unseen data, <strong>especially if our dataset is representative and not biased</strong>.</p>
+<p>For example, a <strong>bias</strong> could be introduced if our dataset consists exclusively of furniture from IKEA. In that case, even when evaluating on a test set, we would still be testing only on IKEA furniture. As a result, the model might perform well on this specific subset but fail to generalize to chairs from other brands, leading to <strong>misclassifications</strong>. This would cause our classifier to perform significantly worse on truly unseen data compared to what the test loss suggests.</p>
+<p><em><strong>Note:</strong></em> <em>Overfitting</em> refers to a model that performs well on training data but significantly worse on test data. This occurs when the model learns patterns that are <strong>too specific</strong> to the training data, rather than generalizing to unseen examples.</p>
+<p><img alt="loss" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/loss.png" /></p>
+</section>
+</section>
+</section>
+<section id="linear-classifiers">
+<h2>Linear Classifiers<a class="headerlink" href="#linear-classifiers" title="Link to this heading">#</a></h2>
+<section id="dataset-d">
+<h3>Dataset <span class="math notranslate nohighlight">\(D\)</span><a class="headerlink" href="#dataset-d" title="Link to this heading">#</a></h3>
+<p>Let’s consider a dataset where <span class="math notranslate nohighlight">\(x^{(i)}\)</span> are vectors in d-dimensional space and labels are either <span class="math notranslate nohighlight">\(-1\)</span> or <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+D = \left\{ (x^{(1)}, y^{(1)}), (x^{(2)}, y^{(2)}), \dots, (x^{(n)}, y^{(n)}) \right\}
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+y^{(i)} \in \{-1, 1\}, \quad \forall i \in \{1, \dots, n\}
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+x^{(i)} \in \mathbb{R}^{d}
+\]</div>
+</section>
+<section id="hypothesis-space-mathcal-h">
+<h3>Hypothesis Space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span><a class="headerlink" href="#hypothesis-space-mathcal-h" title="Link to this heading">#</a></h3>
+<p>We can then define our hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> as following:</p>
+<div class="math notranslate nohighlight">
+\[
+h(x, \theta, \theta_{0}) = sign(\theta \cdot x + \theta_{0})
+\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[
+\theta \in \mathbb{R}^{d} 
+\]</div>
+<p>and</p>
+<div class="math notranslate nohighlight">
+\[
+\theta \in \mathbb{R}
+\]</div>
+<hr class="docutils" />
+<p><em>Why does this work?</em></p>
+<p>To build an intuition, let’s consider <span class="math notranslate nohighlight">\(\theta_0 = 0\)</span>. Then, we need to determine the sign of the dot product:</p>
+<div class="math notranslate nohighlight">
+\[
+sign(\theta \cdot x)
+\]</div>
+<p>In other words, when is the dot product between two vectors <strong>positive</strong> or <strong>negative</strong>? The dot product measures <strong>how much one vector aligns with another</strong>. Specifically:</p>
+<ul class="simple">
+<li><p>The dot product is <strong>positive</strong> when the angle between the two vectors is <strong>less than <span class="math notranslate nohighlight">\(90^\circ\)</span></strong>.</p></li>
+<li><p>The dot product is <strong>zero</strong> when the two vectors are <strong>perpendicular</strong> (in other words <strong>equal to <span class="math notranslate nohighlight">\(0^\circ\)</span></strong>).</p></li>
+<li><p>The dot product is <strong>negative</strong> when the angle is <strong>greater than <span class="math notranslate nohighlight">\(90^\circ\)</span></strong>.</p></li>
+</ul>
+<p><strong>Generalizing This to Decision Boundaries</strong></p>
+<p>This same intuition applies to any <strong>linear classifier</strong>:</p>
+<ul>
+<li><p>The decision boundary is defined by the equation:</p>
+<div class="math notranslate nohighlight">
+\[
+  \theta \cdot x = 0
+  \]</div>
+<p>This represents a <strong>hyperplane</strong> (a line in 2D, a plane in 3D, etc.) that is <strong>orthogonal</strong> to <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+</li>
+<li><p>Any point <span class="math notranslate nohighlight">\(x\)</span> <strong>on the same side</strong> as <span class="math notranslate nohighlight">\(\theta\)</span> satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+  \theta \cdot x &gt; 0
+  \]</div>
+<p>Meaning it is classified <strong>positively</strong>.</p>
+</li>
+<li><p>Any point on the <strong>opposite side</strong> satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+  \theta \cdot x &lt; 0
+  \]</div>
+<p>Meaning it is classified <strong>negatively</strong>.</p>
+</li>
+<li><p>Any point <strong>exactly on the boundary</strong> satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+  \theta \cdot x = 0
+  \]</div>
+<p>Meaning it is <strong>perpendicular</strong> to <span class="math notranslate nohighlight">\(\theta\)</span> and is <strong>neither positively nor negatively classified</strong>.</p>
+</li>
+</ul>
+<p>Try different theta vectors in the following graph to build an intuition (you can grab and drag <span class="math notranslate nohighlight">\(\theta\)</span>):</p>
+<iframe src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/html/linear-classifier.html" width="800" height="600"></iframe></section>
+<section id="loss-l">
+<h3>Loss L<a class="headerlink" href="#loss-l" title="Link to this heading">#</a></h3>
+<p>We define a simple loss:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+L(g, a) =
+\begin{cases} 
+0, &amp; \text{ if }  g = a \\ 
+1, &amp; \text{ if }  g \neq  a \\ 
+\end{cases}
+\end{split}\]</div>
+<p>In other words, we are sad if we guessed wrong (<span class="math notranslate nohighlight">\(g \neq a\)</span>) and not sad otherwise.</p>
+</section>
+<section id="learning-algorithm-1-dumb-learning">
+<h3>Learning Algorithm 1: Dumb learning<a class="headerlink" href="#learning-algorithm-1-dumb-learning" title="Link to this heading">#</a></h3>
+<p>For a given dataset <span class="math notranslate nohighlight">\(D\)</span>, a learning algorithm that searches over the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> and tries to find a solution <span class="math notranslate nohighlight">\(s \in \mathcal{H}\)</span> that minimizes the Loss <span class="math notranslate nohighlight">\(L\)</span>.</p>
+<p>As a first try, let’s do <code class="docutils literal notranslate"><span class="pre">dumb_learning</span></code>: We randomly pick a number of <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(\theta_0\)</span> and pick the best:</p>
+<div class="code">
+<p>dump_learning(D, k):<br>
+    for j = 0 to  k:<br>
+        <span class="math notranslate nohighlight">\(\theta^{(j)}\)</span> = <span class="math notranslate nohighlight">\(\text{random}(\mathbb{R}^d)\)</span><br>
+        <span class="math notranslate nohighlight">\(\theta_0^{(j)}\)</span> = <span class="math notranslate nohighlight">\(\text{random}(\mathbb{R})\)</span><br>
+    <span class="math notranslate nohighlight">\(j^{*}\)</span> = <span class="math notranslate nohighlight">\(\text{argmin}_{\{0, ..., k\}}(\epsilon_n(\theta^{(j)}, \theta_0^{(j)}))\)</span><br>
+    return <span class="math notranslate nohighlight">\((\theta^{(j^{*})}, \theta_0^{(j^{*})})\)</span></p>
+</div>
+<p><em><strong>Note:</strong></em> The  <span class="math notranslate nohighlight">\(k\)</span> in the above algorithm is what is typically referred to as a <em>hyperparameter</em>. It is not part of the parametrization of the hypothesis space but influences the learning. Here, the higher <span class="math notranslate nohighlight">\(k\)</span>, the lower the loss, and one can even prove that:</p>
+<div class="math notranslate nohighlight">
+\[
+\lim_{k \to \infty} \epsilon(\theta^k, \theta_0^k) = 0
+\]</div>
+<p>meaning that if <span class="math notranslate nohighlight">\(k\)</span> grows larger and larger, eventually the loss will be zero for all points (if a solution exists, meaning there is some line that separates the points).</p>
+<p><strong>See <code class="docutils literal notranslate"><span class="pre">dumb_learning</span></code> in action:</strong></p>
+<iframe src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/html/linear-classifier-dumb.html" width="800" height="600"></iframe></section>
+<section id="learning-algorithm-2-clever-algorithm-by-a-clever-person">
+<h3>Learning Algorithm 2: Clever Algorithm by a Clever Person<a class="headerlink" href="#learning-algorithm-2-clever-algorithm-by-a-clever-person" title="Link to this heading">#</a></h3>
+<p><img alt="perceptron" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/perceptron.png" /></p>
+<p>1957 – Frank Rosenblatt, a very clever person whom some refer to as the father of deep learning, developed <code class="docutils literal notranslate"><span class="pre">clever_learning</span></code>, which he dubbed the <em>Perceptron</em>. It was later proven to solve all linearly separable problems—classification problems that can be perfectly separated by a hyperplane.</p>
+<div class="code">
+<p>clever_learning(D, T):<br>
+    <span class="math notranslate nohighlight">\(\theta\)</span> = <span class="math notranslate nohighlight">\(0\)</span>; <span class="math notranslate nohighlight">\(\theta_0\)</span> = 0<br>
+    for j = 0 to T:<br>
+        for i = 0 to n:<br>
+            if <span class="math notranslate nohighlight">\(y^{(i)}(\theta \cdot x^{(i)} + \theta_0) \leq 0\)</span>:<br>
+                <span class="math notranslate nohighlight">\(\theta = \theta + y^{(i)} * x^{(i)}\)</span><br>
+                <span class="math notranslate nohighlight">\(\theta_0 = \theta_0 + y^{(i)}\)</span><br><br />
+    return <span class="math notranslate nohighlight">\((\theta, \theta_0)\)</span></p>
+</div>
+<p>Watch <code class="docutils literal notranslate"><span class="pre">clever_learning</span></code> in action! (You may want to restart the simulation a few times—this algorithm is so clever that it often finds the correct solution on the first try!)</p>
+<iframe src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/html/linear-classifier-clever.html" width="800" height="600"></iframe>
+</section>
+</section>
+<section id="machine-learning-as-optimization">
+<h2>Machine Learning as Optimization<a class="headerlink" href="#machine-learning-as-optimization" title="Link to this heading">#</a></h2>
+<blockquote>
+<div><p>Clever Learning Algorithms for not so clever people</p>
+</div></blockquote>
+<p><img alt="optimus" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/optimus.jpg" /></p>
+<p>Here, we don’t want to rely on being as clever as the “father of deep learning” each time we have a new problem. Instead of using our intuition to come up with cool learning algorithms, we turn our problem into an optimization problem and use general purpose methods to find an optimum.</p>
+<p>An optimization function is characterized by an objective function: <span class="math notranslate nohighlight">\(J(\theta)\)</span>. The optimization then finds <span class="math notranslate nohighlight">\(\theta^* = \text{argmin}_{\theta}(J(\theta))\)</span>.</p>
+<p>A typical machine learning objective function is</p>
+<div class="math notranslate nohighlight">
+\[
+J(\theta) = (\frac{1}{n}\sum_{i=1}^{n}\mathcal{L}(h(x^{(i)}, y^{(i)})) + \lambda R(\theta)
+\]</div>
+<p>with the training error</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{n}\sum_{i=1}^{n}\mathcal{L}(h(x^{(i)}, y^{(i)})
+\]</div>
+<p>and a regularize term (for example to penalize large entries for <span class="math notranslate nohighlight">\(\theta\)</span>)</p>
+<div class="math notranslate nohighlight">
+\[
+\lambda R(\theta)
+\]</div>
+<p>The upside of framing a problem as an optimization problem, is that we can then use general purpose algorithms to optimize. For example, gradient descend:</p>
+</section>
+<section id="gradient-descend">
+<h2>Gradient Descend<a class="headerlink" href="#gradient-descend" title="Link to this heading">#</a></h2>
+<p>Imagine you are lost in the mountains and thirsty. How would you go about finding a water source? One strategy is to always take the steepest downward path at each step. This way you will find a lower point (the lowest local point) where the chances are high that there is water. This is exactly how <strong>gradient descent</strong> works in optimization problems. In nature, a river naturally follows gradient descent.</p>
+<p><strong>Intuition</strong></p>
+<p>Gradient descent is an iterative optimization algorithm used to find the minimum of a function. It follows these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Start at a random point</strong>: Choose an initial guess for the solution.</p></li>
+<li><p><strong>Compute the gradient</strong>: The gradient (vector of partial derivatives) points in the direction of the steepest ascent.</p></li>
+<li><p><strong>Take a step in the opposite direction</strong>: Move against the gradient by a small step size (learning rate).</p></li>
+<li><p><strong>Repeat until convergence</strong>: Continue iterating until the function value stops changing significantly.</p></li>
+</ol>
+<p><strong>Types of Gradient Descent</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Batch Gradient Descent</strong>: Uses the entire dataset to compute the gradient.</p></li>
+<li><p><strong>Stochastic Gradient Descent (SGD)</strong>: Uses a single random data point per update.</p></li>
+<li><p><strong>Mini-Batch Gradient Descent</strong>: Uses small subsets of the data for each update.</p></li>
+</ol>
+<section id="dimensional-gradient-descent">
+<h3>1 Dimensional Gradient Descent<a class="headerlink" href="#dimensional-gradient-descent" title="Link to this heading">#</a></h3>
+<p>Let’s first assume both <span class="math notranslate nohighlight">\(\theta\)</span> and <span class="math notranslate nohighlight">\(f(\theta)\)</span> are 1-dimensional (scalars). The update rule for gradient descent then is defined by</p>
+<div class="math notranslate nohighlight">
+\[
+\theta^{t+1} = \theta^t - \eta f'(\theta^t)
+\]</div>
+<p>with <span class="math notranslate nohighlight">\(f'(\theta_t)\)</span> the derivative of <span class="math notranslate nohighlight">\(f\)</span> at point <span class="math notranslate nohighlight">\(\theta_t\)</span> and the learning rate <span class="math notranslate nohighlight">\(\eta\)</span>.</p>
+<p>We can also write this as an algorithm:</p>
+<div class="code">
+<p>GD1D(<span class="math notranslate nohighlight">\(\theta_{init}\)</span>, <span class="math notranslate nohighlight">\(f\)</span>, <span class="math notranslate nohighlight">\(f'\)</span>, <span class="math notranslate nohighlight">\(\eta\)</span>, <span class="math notranslate nohighlight">\(\varepsilon\)</span>):<br>
+    <span class="math notranslate nohighlight">\(\theta^{(0)} = \theta_{init}\)</span><br>
+    <span class="math notranslate nohighlight">\(t = 0\)</span><br>
+    loop<br>
+        <span class="math notranslate nohighlight">\(t = t + 1\)</span><br>
+        <span class="math notranslate nohighlight">\(\theta^{t+1} = \theta^t - \eta f'(\theta^t)\)</span><br>
+    until <span class="math notranslate nohighlight">\(|f(\theta^{(t)}) - f(\theta^{(t-1)})| &lt; \varepsilon\)</span><br>
+    return <span class="math notranslate nohighlight">\(\theta^{(t)}\)</span><br></p>
+</div>
+<p>To get a better intuition, here a few examples:</p>
+<iframe src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/html/gradient-descent/_2.html" width="500" height="500"></iframe>
+<iframe src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/html/gradient-descent/_3.html" width="500" height="500"></iframe>
+<p><em><strong>Note:</strong></em> For a convex function, it can be shown that for each error <span class="math notranslate nohighlight">\(\varepsilon\)</span> no matter how little, one can find a learning rate <span class="math notranslate nohighlight">\(\eta\)</span> so that the above algorithm <em>converges</em>. In mathematical terms:</p>
+<div class="math notranslate nohighlight">
+\[
+\forall \varepsilon &gt; 0, \quad \exists \eta &gt; 0 \text{ such that } |f(\theta^{(t)}) - f(\theta^*)| &lt; \varepsilon \text{ as } t \to \infty.
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(f(\theta^*)\)</span> is the minimum value of <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</section>
+<section id="n-dimensional-gradient-descent">
+<h3>n Dimensional Gradient Descent<a class="headerlink" href="#n-dimensional-gradient-descent" title="Link to this heading">#</a></h3>
+<p>The above algorithm works just as well when <span class="math notranslate nohighlight">\(\theta\)</span> has more than one dimension. Instead of the derivative <span class="math notranslate nohighlight">\(f'\)</span>, we then use</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\nabla f =
+\begin{bmatrix}
+\frac{\partial f}{\partial \theta_0} \\
+\frac{\partial f}{\partial \theta_1} \\
+\vdots \\
+\frac{\partial f}{\partial \theta_n}
+\end{bmatrix}
+\end{split}\]</div>
+<p><em><strong>Note:</strong></em> Here, the <em>output</em> of <span class="math notranslate nohighlight">\(f\)</span> is still one-dimensional. You can imagine this, for example, as a height map when <span class="math notranslate nohighlight">\(\theta\)</span> is two-dimensional. Then, the gradient will be the steepest direction—the opposite direction of the fall line.
+If you like to ski, this is the line where you are “drawn to,” or, similarly, the path where water will naturally flow downhill.</p>
+</section>
+</section>
+<section id="logistic-regression-why">
+<h2>Logistic Regression - Why?<a class="headerlink" href="#logistic-regression-why" title="Link to this heading">#</a></h2>
+<p><img alt="optimus" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/log.png" /></p>
+<section id="why-linear-classifiers-are-not-optimal-nor-optimizable">
+<h3>Why Linear Classifiers are not Optimal (nor Optimizable<span class="math notranslate nohighlight">\(^*\)</span>)<a class="headerlink" href="#why-linear-classifiers-are-not-optimal-nor-optimizable" title="Link to this heading">#</a></h3>
+<p>In the above section about linear classifier, we defined an error function. Why can we not just plug that into our gradient descent function?</p>
+<p>Again, imagine you are lost and thirsty in the mountains. But since you have learned about gradient descent, you have a solution, right? Just follow the opposite of the gradient. What do you do if you reach a plateau though (in other words the gradient is 0)? If you are a very committed to the gradient descent algorithm you will die from thirst in this scenario.</p>
+<p>The same is true for our linear classifier. There are “plateaus” everywhere. You can convince yourself by “wiggling” the <span class="math notranslate nohighlight">\(\theta\)</span> vector in the interactive plot earlier. Small changes will not change the amount of blue or red dots which means small changes wouldn’t change our error function (the amount of dots classified incorrectly). In other words, our gradient is zero and the gradient descent algorithm doesn’t <em>know</em> in which direction to go.</p>
+<p><strong><span class="math notranslate nohighlight">\(^*\)</span> At least not with the standard gradient descent algorithm described earlier.</strong></p>
+<p>To build up an intuition, you can think about this as: <strong>Certain properties of the loss function make it easier to optimize it. Steps are problematic, continuity is good.</strong></p>
+<p><img alt="lost-gradient" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/lost-gradient.png" /></p>
+</section>
+<section id="why-don-t-we-really-on-the-perceptron-then">
+<h3>Why don’t we really on the Perceptron then?<a class="headerlink" href="#why-don-t-we-really-on-the-perceptron-then" title="Link to this heading">#</a></h3>
+<p>The perceptron only guarantees that a solution is found if (and only if) the minimum loss of the function is zero. Then it will find the solution. However, we would also like to find the <strong>best</strong> solution (the one that optimizes the loss) in other scenarios like this:</p>
+<p><img alt="non-zero-loss" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/non-zero-loss.png" /></p>
+</section>
+</section>
+<section id="linear-logistic-classifier">
+<h2>Linear Logistic Classifier<a class="headerlink" href="#linear-logistic-classifier" title="Link to this heading">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Until now, we used the labels (-1, 1), but to make things easier, we will change the labels to (0, 1).</p>
+</div>
+<section id="hypothesis-class-mathcal-h">
+<h3>Hypothesis Class <span class="math notranslate nohighlight">\(\mathcal{H}\)</span><a class="headerlink" href="#hypothesis-class-mathcal-h" title="Link to this heading">#</a></h3>
+<p>The only difference between a <strong>linear classifier</strong> and a <strong>linear logistic classifier</strong> is that instead of the <span class="math notranslate nohighlight">\(sign\)</span> function, we now use <span class="math notranslate nohighlight">\(\sigma\)</span>:</p>
+<p>Our hypothesis will look like this (here to make things explicit we name the hypothesis LLC instead of <span class="math notranslate nohighlight">\(h\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[
+LLC(x; \theta, \theta_0) = \sigma(\theta \cdot x + \theta_0) 
+\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[
+\sigma(z) = \frac{1}{1-e^{-z}}
+\]</div>
+<p>The following image might help with your intuition why this is a reasonable function to choose:</p>
+<hr class="docutils" />
+<p>Remember the <em>linear classifier</em> hypothesis:</p>
+<div class="math notranslate nohighlight">
+\[
+LC(x; \theta; \theta_0) = sign(\theta \cdot x + \theta_0)
+\]</div>
+<p>This can be understood as a “step function”:</p>
+<p><img alt="non-zero-loss" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/linear-step-function.png" /></p>
+<hr class="docutils" />
+<p>Remember the linear <em>logistic</em> classifier hypothesis:</p>
+<div class="math notranslate nohighlight">
+\[
+LLC(x; \theta; \theta_0) = \sigma(\theta \cdot x + \theta_0)
+\]</div>
+<p>This can be understood as a smoother version of the same “step function”:</p>
+<p><img alt="non-zero-loss" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/logistic-function.png" /></p>
+<hr class="docutils" />
+<p><em><strong>Note:</strong></em> By now, if you have built some intuition about gradient descent you should also have an intuition why a smoother version of the step function might be easier to optimize: Instead of a error function with plateaus, we will build an error function that is “smooth”.</p>
+</section>
+<section id="loss-function-l">
+<h3>Loss function <span class="math notranslate nohighlight">\(L\)</span><a class="headerlink" href="#loss-function-l" title="Link to this heading">#</a></h3>
+<p>With our hypothesis space <span class="math notranslate nohighlight">\(LLC\)</span>, we can now define a Loss function <span class="math notranslate nohighlight">\(L\)</span>:</p>
+<p>Let’s look at our prediction <span class="math notranslate nohighlight">\(g\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+g^{(i)} = \sigma(\theta \cdot x^{(i)} + \theta_0)
+\]</div>
+<p>this can be interpreted as the probability of guessing that the label at <span class="math notranslate nohighlight">\(x^{(i)}\)</span> is <span class="math notranslate nohighlight">\(1\)</span>. But then, we can write the accuracy of the hypothesis <span class="math notranslate nohighlight">\(A\)</span> on the training set as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+A = \prod_{i=0}^n \begin{cases} 
+g^{(i)}, &amp; \text{ if }  y^{(i)} = 1 \\ 
+1 - g^{(i)} , &amp; \text{ if }  y^{(i)} = 0 \\ 
+\end{cases}
+\end{split}\]</div>
+<p>this is the probability of guessing the full training set (every label) correctly.</p>
+<p>A more compact way of writing this is:</p>
+<div class="math notranslate nohighlight">
+\[
+A = \prod_{i=0}^n {g^{(i)}}^{y^{(i)}} * (1 - {g^{(i)})}^{1 - y^{(i)}}
+\]</div>
+<p><em><strong>Tip 1:</strong></em> This trick of using exponentiation to replace conditional branching is a powerful and elegant technique. It’s particularly useful in optimization and gradient-based learning because it allows for smooth, differentiable computations without explicit if statements. It works since <span class="math notranslate nohighlight">\(a^0 = 1\)</span> and <span class="math notranslate nohighlight">\(y^{(i)}\)</span> is either 0 or 1. Convince yourself, that the formulas are equivalent by trying out both cases of the if statement (<span class="math notranslate nohighlight">\(^{(i)} = 0\)</span> and <span class="math notranslate nohighlight">\(^{(i)} = 1\)</span>).</p>
+<p><em><strong>Tip 2:</strong></em> <span class="math notranslate nohighlight">\(A\)</span> is also called the <strong>Bernoulli likelihood function</strong>.</p>
+<p>With all the math involved in defining a loss function, it’s easy to lose sight of the main goal: providing an objective function that can be optimized using gradient descent (or similar methods).</p>
+<p><em>What Really Matters?</em></p>
+<p>Most of the time, we don’t necessarily care about the interpretability of the loss function. Instead, we only need to ensure that:</p>
+<ol class="arabic simple">
+<li><p>The loss function provides meaningful gradients that guide the optimizer toward better model parameters.</p></li>
+<li><p>Optimizing the loss improves the model’s performance.</p></li>
+</ol>
+<p>For example, if we take an objective function <span class="math notranslate nohighlight">\(O\)</span> and multiply it by a positive scalar, the function itself becomes “stretched.” However, this does not change the location of the minima and maxima—it only scales the gradients. Since gradient-based optimizers adjust step sizes accordingly, optimization results remain unchanged.</p>
+<p>Thus, while a scaled loss function might lose its original interpretability, it still leads to the same optimal solution when used in training.</p>
+<p>This is not only true for <strong>stretching</strong> but for all monotonic transformations: If we preserve the <strong>order</strong> of the values, that means we use a transformation <span class="math notranslate nohighlight">\(w\)</span> for witch <span class="math notranslate nohighlight">\(x_i &lt; x_j \implies w(x_i) &lt; w(x_j) \ \forall x_i, x_j\)</span>, then our gradient descent optimization still gives the same results.</p>
+<p>This is important, since we will use now log-transform <span class="math notranslate nohighlight">\(A\)</span> to get our final loss function <span class="math notranslate nohighlight">\(A'\)</span></p>
+<p>This is not only true for <strong>stretching</strong> but for all <strong>monotonic transformations</strong>:</p>
+<p>If we preserve the <strong>order</strong> of the values, that means we use a transformation ( w ) for which:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+A' &amp;= \log(A) \\
+&amp;= \log (\prod_{i=0}^{n} g^{(i)y^{(i)}} (1 - g^{(i)})^{1 - y^{(i)}}) \\ 
+&amp;= \sum_{i=0}^{n} \log \left( g^{(i)y^{(i)}} \right) + \log \left( (1 - g^{(i)})^{1 - y^{(i)}} \right) \ (1) \\
+&amp;= \sum_{i=0}^{n} y^{(i)} \log (g^{(i)}) + (1 - y^{(i)}) \log (1 - g^{(i)})  \ (2)
+\end{align}
+\end{split}\]</div>
+<p>We used:</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\log(a*b) = \log(a) + \log(b)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\log(a^b) = b * \log(a)\)</span></p></li>
+</ol>
+<p>Since we want to maximize <span class="math notranslate nohighlight">\(A\)</span>, we can minimize -<span class="math notranslate nohighlight">\(A'\)</span> which is also called <em>Negative log likelihood</em> or <em>cross entropy</em>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L} = - \sum_{i=0}^{n} y^{(i)} \log (g^{(i)}) + (1 - y^{(i)}) \log (1 - g^{(i)})
+\]</div>
+<p>We won’t go through the full derivation of the gradient of <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> with respect to <span class="math notranslate nohighlight">\(\theta\)</span> here, but it’s a great exercise for those interested. Tip: Use the chain-rule.</p>
+<p>The final result for the gradient is:</p>
+<div class="math notranslate nohighlight">
+\[
+\nabla_{\theta} \mathcal{L} = \sum_{i=0}^{n} (g^{(i)} - y^{(i)}) x^{(i)}
+\]</div>
+</section>
+<section id="caveat-linear-separability">
+<h3>Caveat: Linear Separability<a class="headerlink" href="#caveat-linear-separability" title="Link to this heading">#</a></h3>
+<p>The linear logistic classifier only gives good answers when the data is <strong>linear separable</strong>. To get around this we can sometimes transform our data, for example by using an additional dimension and a polynomial basis:</p>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/linear-separable.png" /></p>
+<p>However, a neural networks provide a more general solution for this problem:</p>
+</section>
+</section>
+<section id="neural-networks">
+<h2>Neural Networks<a class="headerlink" href="#neural-networks" title="Link to this heading">#</a></h2>
+<section id="neuron">
+<h3>Neuron<a class="headerlink" href="#neuron" title="Link to this heading">#</a></h3>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/neuron.png" /></p>
+<p>A single <strong>neuron</strong> in a neural network computes its activation using a weighted sum of inputs <span class="math notranslate nohighlight">\(\vec{x}\)</span>), followed by a activation function <span class="math notranslate nohighlight">\(f\)</span>. Mathematically, this can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+a = f ( \sum_{i=0}^n w_i * x_i + w_0 )
+\]</div>
+<p>or in vector notation</p>
+<div class="math notranslate nohighlight">
+\[
+a = f \left( \vec{w} \cdot \vec{x} + w_0 \right)
+\]</div>
+<p><em><strong>Note:</strong></em></p>
+<ul class="simple">
+<li><p>If <span class="math notranslate nohighlight">\(f = sign\)</span> this is just a <strong>linear classifier</strong>.</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(f = \sigma\)</span> it is a <strong>linear logistic classifier</strong>.</p></li>
+</ul>
+</section>
+<section id="layer">
+<h3>Layer<a class="headerlink" href="#layer" title="Link to this heading">#</a></h3>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/layer.png" /></p>
+<p>We call <span class="math notranslate nohighlight">\(m\)</span> parallel neurons a <strong>layer</strong> of size m.</p>
+<p>we can write this as</p>
+<div class="math notranslate nohighlight">
+\[
+a_j = f( \vec{w}^{(j)} \cdot \vec{x} + w_0^{(j)})
+\]</div>
+<p>or more concise in matrix form:</p>
+<div class="math notranslate nohighlight">
+\[
+\vec{a} = f ( W \vec{x} + \vec{w}_0)
+\]</div>
+<p>with</p>
+<div class="math notranslate nohighlight">
+\[
+\vec{x} \in \mathbb{R}^n; \ \vec{a}, \vec{w}_0 \in \mathbb{R}^m; \ W \in \mathbb{R}^{n \ \text{x} \ m}
+\]</div>
+</section>
+<section id="network">
+<h3>Network<a class="headerlink" href="#network" title="Link to this heading">#</a></h3>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/neural-network.png" /></p>
+<p>A neural network is when we (serially) connect multiple layers</p>
+<p><em><strong>Note:</strong></em>
+If <span class="math notranslate nohighlight">\(f^L = \sigma\)</span> and <span class="math notranslate nohighlight">\(W^L \in \mathbb{R}^{\cdot \ \text{x} \ 1}\)</span>, the neural network is a (logistic) classifier.</p>
+</section>
+<section id="activation-functions">
+<h3>Activation Functions<a class="headerlink" href="#activation-functions" title="Link to this heading">#</a></h3>
+<p>Think about what could be “good” activation functions <span class="math notranslate nohighlight">\(f^i\)</span>?</p>
+<p>To keep things simple, let’s consider linear activation functions <span class="math notranslate nohighlight">\(f(z) = \lambda * z\)</span>.</p>
+<p>If all our activation functions are linear, we can write:</p>
+<div class="math notranslate nohighlight">
+\[
+A \vec{x} = W^total \vec{x} : W^total = \prod \lambda^{i} W^i
+\]</div>
+<p>in other words, we can write our neural network as one layer and the matrix <span class="math notranslate nohighlight">\(W^total\)</span>! This is defeats the purpose of using multiple layers. Instead, activation functions are only helpful if they are non-linear. In addition, for reasons we explored in the section about optimization, they should be differentiable (that means step functions or signs are not ideal). But, we can use <span class="math notranslate nohighlight">\(\sigma\)</span> or ReLU:</p>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/activation-functions.png" /></p>
+</section>
+</section>
+<section id="backpropagation">
+<h2>Backpropagation<a class="headerlink" href="#backpropagation" title="Link to this heading">#</a></h2>
+<p>If you’ve been following along, understanding backpropagation seems almost trivial. In essence, backpropagation is just a more fancy word for the <em>chain rule</em> you are familiar with from calculus.</p>
+<p><img alt="linear-separable" src="https://younesstrittmatter.github.io/teaching/_static/machine-learning/classifiers/backprop.png" /></p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\delta loss}{\delta W^L} = \frac{\delta loss}{\delta A^L} * \frac{\delta A^L}{\delta Z^L} *  \frac{\delta Z^L}{\delta W^L}
+\]</div>
+<p>with:</p>
+<p><span class="math notranslate nohighlight">\(\frac{\delta loss}{\delta A^L}\)</span> defined by the chosen loss function</p>
+<p><span class="math notranslate nohighlight">\(\frac{\delta A^L}{\delta Z^L} = (f^{L})'\)</span></p>
+<p><span class="math notranslate nohighlight">\(\frac{\delta Z^L}{\delta W^L} = A^{L-1}\)</span></p>
+<p>And, we can then successively calculate the Losses for each weight by:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\delta loss}{\delta W^1} = \frac{\delta loss}{\delta A^L} * \frac{\delta A^L}{\delta Z^L} * \frac{\delta Z^L}{\delta A^{L-1}} * \frac{\delta A^{L-1}}{\delta Z^{L-1}} * ... * \frac{\delta A^2}{\delta Z^2} * \frac{\delta Z^2}{\delta A^1} * \frac{\delta A^1}{\delta Z^1}
+\]</div>
+<p>with</p>
+<p><span class="math notranslate nohighlight">\(\frac{\delta Z^i}{\delta A^{i-1}} = W^i\)</span> since <span class="math notranslate nohighlight">\(W\)</span> are linear functions</p>
+<p><span class="math notranslate nohighlight">\(\frac{\delta A^i}{\delta Z^i} = (f^i)'\)</span></p>
+<p>which we can both easily calculate.</p>
+<p>THANK YOU AND HAPPY CODING!</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/machine-learning"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Teaching Materials</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="reinforcement-learning/TD-Table.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2 Temporal Difference Learning</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#aristotelian-essentialism">Aristotelian Essentialism</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-is-effortless">Classification is Effortless!</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-in-a-nutshell">Machine Learning in a nutshell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classifying-classifiers">Classifying Classifiers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data">Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification">Binary Classification</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-feature-representation">Caveat: Feature Representation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution-space-hypothesis-class">Solution Space - Hypothesis Class</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-a-hypothesis-the-loss-function">Evaluating a Hypothesis: The Loss Function</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-don-t-overfit">Caveat: Don’t Overfit</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-classifiers">Linear Classifiers</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-d">Dataset <span class="math notranslate nohighlight">\(D\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-space-mathcal-h">Hypothesis Space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-l">Loss L</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-algorithm-1-dumb-learning">Learning Algorithm 1: Dumb learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-algorithm-2-clever-algorithm-by-a-clever-person">Learning Algorithm 2: Clever Algorithm by a Clever Person</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-as-optimization">Machine Learning as Optimization</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gradient-descend">Gradient Descend</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensional-gradient-descent">1 Dimensional Gradient Descent</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#n-dimensional-gradient-descent">n Dimensional Gradient Descent</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-why">Logistic Regression - Why?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-linear-classifiers-are-not-optimal-nor-optimizable">Why Linear Classifiers are not Optimal (nor Optimizable<span class="math notranslate nohighlight">\(^*\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-don-t-we-really-on-the-perceptron-then">Why don’t we really on the Perceptron then?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-logistic-classifier">Linear Logistic Classifier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-class-mathcal-h">Hypothesis Class <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loss-function-l">Loss function <span class="math notranslate nohighlight">\(L\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#caveat-linear-separability">Caveat: Linear Separability</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#neural-networks">Neural Networks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#neuron">Neuron</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#layer">Layer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#network">Network</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activation-functions">Activation Functions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#backpropagation">Backpropagation</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

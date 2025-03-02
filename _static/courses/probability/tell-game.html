@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tell-Game</title>
+    <style>
+        * {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            list-style: none;
+        }
+
+        table {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+        }
+        table td {
+            border: 1px solid black;
+            padding: 30px;
+        }
+
+        table th {
+            border: 1px solid black;
+            padding: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<div>
+    <h1>The Tell Game</h1>
+    
+    <h2>Instructions</h2>
+
+    <h3>Objective</h3>
+    <p>Your goal in The Tell Game is to determine whether to play or fold based on the likelihood that your opponent has
+        drawn an ace. If your opponent has at least one ace, they win the game. If they don’t have any aces, you
+        win.</p>
+
+    <h3>Game Setup</h3>
+
+    <h4>Opponent’s Draw</h4>
+
+    <ul>
+        <li>The opponent draws two cards.</li>
+        <li>If they have at least one ace, they win.</li>
+        <li>f they have no aces, you win.</li>
+
+    </ul>
+
+    <h4>The Tell (Opponent’s Behavior)</h4>
+    <ul>
+        <li>If the opponent has at least one ace, they will scratch their nose with <span id="tell-given-ace"></span> probability.</li>
+        <li>If the opponent has no aces, they will scratch their nose with <span id="tell-given-no-ace"></span> probability.</li>
+    </ul>
+
+    <h4>Your Turn</h4>
+
+    <ul>
+        <li>Before the opponent draws, you will draw 7 cards from the deck and look at them. This cards are set aside
+            and not returned to the deck.
+        </li>
+        <li>Decision: Play or Fold</li>
+        <li>If you choose to play, you will:</li>
+        <li>Win 10 points if the opponent does not have an ace.</li>
+        <li>Lose 20 points if the opponent does have an ace.</li>
+        <li>If you fold, the round ends without gaining or losing points.</li>
+    </ul>
+
+    <h4>There are two types of players in this game</h4>
+
+    <h4>Probability-Only Player</h4>
+    <ul>
+        <li>This player does not consider the opponent's tell (scratching their nose).</li>
+        <li>They base their decision purely on the probability of the opponent having an ace.</li>
+    </ul>
+
+    <h4>Tell-Reading Player</h4>
+    <ul>
+        <li>This player takes the opponent’s tell into account.</li>
+        <li>They make their decision based on the probability of the opponent having an ace given that the opponent
+            scratched their nose or did not.
+        </li>
+    </ul>
+
+    Try to maximize your points by making the best decision based on the information provided and try to beat the other
+    two players.
+</div>
+<hr>
+<div>
+    <h2>Game</h2>
+    <table style="margin: 0 auto;">
+        <tr>
+            <th>Seven Cards</th>
+            <td id="cards"></td>
+        </tr>
+        <tr>
+            <th>Tell</th>
+            <td id="tell"></td>
+        </tr>
+
+        <tr>
+            <th>Decision (Probability Player)</th>
+            <td id="prob-decision"></td>
+        </tr>
+        <tr>
+            <th>Decision (Tell Player)</th>
+            <td id="tell-decision"></td>
+        </tr>
+    </table>
+
+    <h3>Your decision:</h3>
+    <button id="play">Play</button>
+    <button id="fold">Fold</button>
+    <h3>Score Board</h3>
+    <div id="score_board">
+        <p>Games Played: <span id="games_played"></span></p>
+        <p>Drawn Aces: <span id="drawn_aces"></span></p>
+        <p>Probability-Only Player: <span id="probability_only"></span></p>
+        <p>Tell-Reading Player: <span id="tell_reading"></span></p>
+        <p>Player: <span id="player"></span></p>
+    </div>
+</div>
+<script>
+    let score_board = {
+        games_played: 0,
+        drawn_aces: 0,
+        probability_only: 0,
+        tell_reading: 0,
+        player: 0
+    };
+
+    const prob_tell_given_ace = .4 + Math.random() * 0.6;
+    const prob_tell_given_no_ace = .3 - Math.random() * 0.3;
+
+    document.getElementById('tell-given-ace').innerText = `${Math.round(prob_tell_given_ace * 100)}%`;
+    document.getElementById('tell-given-no-ace').innerText = `${Math.round(prob_tell_given_no_ace * 100)}%`;
+
+
+    const play_game = () => {
+        // hide play button
+
+        const deck = shuffle_deck();
+        const seven = get_seven(deck);
+        const two = get_two(deck);
+
+        const cards = document.getElementById('cards');
+        cards.innerHTML = seven.map(card => `${card.value}${card.suit}`).join(' ');
+
+        const has_ace = two.some(card => card.value === 'A');
+
+        const tell = has_ace ? Math.random() < prob_tell_given_ace : Math.random() < prob_tell_given_no_ace;
+
+        document.getElementById('tell').innerHTML = tell ? 'Opponent scratched their nose' : 'Opponent did not scratch their nose';
+
+        const prob_ace = prob_ace_in_two(seven);
+
+        const decision_proba_player = prob_ace < .5 ? 'play' : 'fold';
+        document.getElementById('prob-decision').innerText = `${decision_proba_player}`;
+        score_board.probability_only += decision_proba_player === 'play' ? (has_ace ? -20 : 10) : 0;
+
+
+        let decision_tell_player
+        if (tell) {
+            const prob_ace_condition = prob_ace_given_tell(prob_ace, prob_tell_given_ace, prob_tell_given_no_ace);
+            decision_tell_player = prob_ace_condition < .5 ? 'play' : 'fold';
+        }
+        if (!tell) {
+            const prob_ace_condition = prob_ace_given_no_tell(prob_ace, prob_tell_given_ace, prob_tell_given_no_ace);
+            decision_tell_player = prob_ace_condition < .5 ? 'play' : 'fold';
+        }
+
+        document.getElementById('tell-decision').innerText = `${decision_tell_player}`;
+        score_board.tell_reading += decision_tell_player === 'play' ? (has_ace ? -20 : 10) : 0;
+
+        const play_button = document.getElementById('play');
+        const fold_button = document.getElementById('fold');
+
+        const end_game = () => {
+            score_board.drawn_aces += has_ace ? 1 : 0;
+            score_board.games_played += 1;
+            document.getElementById('games_played').innerText = score_board.games_played;
+            document.getElementById('drawn_aces').innerText = score_board.drawn_aces;
+            document.getElementById('probability_only').innerText = score_board.probability_only;
+            document.getElementById('tell_reading').innerText = score_board.tell_reading;
+            document.getElementById('player').innerText = score_board.player;
+            play_game();
+        }
+
+        play_button.onclick = () => {
+            if (decision_proba_player === 'play') {
+                if (has_ace) {
+                    score_board.player -= 20;
+                } else {
+                    score_board.player += 10;
+                }
+            }
+            end_game();
+        }
+
+        fold_button.onclick = () => {
+            if (decision_proba_player === 'fold') {
+                score_board.player += 0;
+            }
+            end_game();
+        }
+    }
+
+
+    const shuffle_deck = () => {
+        const suits = ['♠', '♣', '♦', '♥'];
+        const values = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+        const deck = suits.flatMap(suit => values.map(value => ({suit, value})));
+        return deck.sort(() => Math.random() - 0.5)
+    };
+
+    const get_seven = (deck) => deck.slice(0, 7);
+    const get_two = (deck) => deck.slice(7, 9);
+
+    const prob_ace_in_two = (seen) => {
+        const aces = seen.filter(card => card.value === 'A').length;
+        if (aces >= 4) {
+            return 0;
+        }
+        const remaining_cards = 52 - seen.length;
+        const remaining_aces = 4 - aces;
+        const remaining_non_aces = remaining_cards - remaining_aces;
+
+        // Probability of NOT drawing an ace in two draws
+        const prob_no_ace = (remaining_non_aces / remaining_cards) * ((remaining_non_aces - 1) / (remaining_cards - 1));
+
+        // Probability of at least one ace in two draws
+        return 1 - prob_no_ace;
+    }
+
+    const prob_ace_given_tell = (prob_ace, prob_tell_given_ace, prob_tell_given_no_ace) => {
+        const nominator = prob_tell_given_ace * prob_ace;
+        const denominator = prob_tell_given_ace * prob_ace + prob_tell_given_no_ace * (1 - prob_ace);
+        return nominator / denominator;
+    }
+
+    const prob_no_ace_given_tell = (prob_ace, prob_tell_given_ace, prob_tell_given_no_ace) => {
+        const nominator = prob_tell_given_no_ace * (1 - prob_ace);
+        const denominator = prob_tell_given_ace * prob_ace + prob_tell_given_no_ace * (1 - prob_ace);
+        return nominator / denominator;
+    }
+
+    const prob_ace_given_no_tell = (prob_ace, prob_tell_given_ace, prob_tell_given_no_ace) => {
+        const nominator = (1 - prob_tell_given_ace) * prob_ace;
+        const denominator = (1 - prob_tell_given_ace) * prob_ace + (1 - prob_tell_given_no_ace) * (1 - prob_ace);
+        return nominator / denominator;
+    }
+
+    const prob_no_ace_given_no_tell = (prob_ace, prob_tell_given_ace, prob_tell_given_no_ace) => {
+        const nominator = (1 - prob_tell_given_no_ace) * (1 - prob_ace);
+        const denominator = (1 - prob_tell_given_ace) * prob_ace + (1 - prob_tell_given_no_ace) * (1 - prob_ace);
+        return nominator / denominator;
+    }
+
+    play_game()
+</script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+img {
+    display: block;
+    margin: 5vh auto 15vh;
+    max-width: 60%;
+
+}
+
+.code {
+    background:#222;
+    padding:10px;
+    border-radius:5px;
+    font-family:monospace;
+    color: #eee;
+}

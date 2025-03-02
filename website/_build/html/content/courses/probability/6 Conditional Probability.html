@@ -1,0 +1,606 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>6 Conditional Probability &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=4cf46451" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'content/courses/probability/6 Conditional Probability';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="../../../_static/logo.png" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Teaching Materials
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning/Classifiers.html">1 Classifiers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../machine-learning/reinforcement-learning/TD-Table.html">2 Temporal Difference Learning</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1%20Counting.html">1 Counting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2%20Permutations.html">2 Permutations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3%20Combinations.html">3 Combinations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4%20Sorting.html">4 Sorting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5%20What%20is%20Probability.html">5 What is Probability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Games.html">Games</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fcontent/courses/probability/6 Conditional Probability.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/content/courses/probability/6 Conditional Probability.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>6 Conditional Probability</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="conditional-probability">
+<h1>6 Conditional Probability<a class="headerlink" href="#conditional-probability" title="Link to this heading">#</a></h1>
+<p>Conditional probability is the probability of an event given that another event has already occurred.</p>
+<p>Example{example}</p>
+<p>Given two dice rolls, we want to calculate the probability of the of the sum of those rolls being 4.</p>
+<p>Solution{solution}</p>
+<p>The solution space of this problem is the set of all possible outcomes of two dice rolls:</p>
+<p><span class="math notranslate nohighlight">\(\Omega = \{(1,1), (1,2), \dots, (6,6)\}\)</span></p>
+<p>With</p>
+<p><span class="math notranslate nohighlight">\(|\Omega| = 6 * 6 = 36\)</span></p>
+<p>The event space of the sum of the rolls being 4 is the set of all outcomes where the sum of the rolls is 4:</p>
+<p><span class="math notranslate nohighlight">\(A = \{(1,3), (2,2), (3,1)\}\)</span></p>
+<p>With</p>
+<p><span class="math notranslate nohighlight">\(|A| = 3 \)</span></p>
+<p>Thus, the probability of the sum of the rolls being 4 is <span class="math notranslate nohighlight">\(\frac{|A|}{|\Omega|} = \frac{3}{36} = \frac{1}{12}\)</span>.</p>
+<p>Now, let us consider we could look at the first die roll before the second die roll. If you would have gambled on the sum of the rolls being 4, what number would you want to see on the first die roll? Would you rather see 1, 2, 3, 4, 5, or 6?</p>
+<p>Solution{solution}</p>
+<p>You wouldn’t want to see 4, 5, 6 since then the second roll doesn’t matter. The sum would always be greater than 4. Let’s consider the other cases:</p>
+<ul class="simple">
+<li><p>If you see a 1, now the solution space is reduced to <span class="math notranslate nohighlight">\(\Omega = \{(1,1), (1,2), (1,3), (1,4), (1,5), (1,6)\}\)</span> and the event space is reduced to <span class="math notranslate nohighlight">\(A = \{(1,3)\}\)</span>. The probability of the sum of the rolls being 4 is <span class="math notranslate nohighlight">\(\frac{|A|}{|\Omega|} = \frac{1}{6}\)</span>.</p></li>
+<li><p>If you see a 2, now the solution space is reduced to <span class="math notranslate nohighlight">\(\Omega = \{(2,1), (2,2), (2,3), (2,4), (2,5), (2,6)\}\)</span> and the event space is reduced to <span class="math notranslate nohighlight">\(A = \{(2,2)\}\)</span>. The probability of the sum of the rolls being 4 is <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>.</p></li>
+<li><p>If you see a 3, now the solution space is reduced to <span class="math notranslate nohighlight">\(\Omega = \{(3,1), (3,2), (3,3), (3,4), (3,5), (3,6)\}\)</span> and the event space is reduced to <span class="math notranslate nohighlight">\(A = \{(3,1)\}\)</span>. The probability of the sum of the rolls being 4 is <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>.</p></li>
+</ul>
+<p><em><strong>Note:</strong></em> After seeing a 1, 2, or 3 on the first die roll, the probability of the sum of the rolls being 4 is always <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>. So you are equally happy to see a 1, 2, or 3 on the first die roll.</p>
+<p>Conditional Probability{definition}</p>
+<p>The conditional probability is defined as the probability of an event <span class="math notranslate nohighlight">\(A\)</span> happening, given that another event <span class="math notranslate nohighlight">\(B\)</span> has already occurred:</p>
+<p>We write the conditional probability of <span class="math notranslate nohighlight">\(A\)</span> given <span class="math notranslate nohighlight">\(B\)</span> as <span class="math notranslate nohighlight">\(P(A|B)\)</span>.</p>
+<p>We mean <span class="math notranslate nohighlight">\(P(A, \text{given that } B \text{ has occurred})\)</span>.</p>
+<p>The sample space is now all possible outcomes that are consistent with <span class="math notranslate nohighlight">\(B\)</span> (i.e., <span class="math notranslate nohighlight">\(\Omega \cap B = B\)</span>).</p>
+<p>The event space is now all possible outcomes that are consistent with <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> (i.e., <span class="math notranslate nohighlight">\(A \cap B\)</span>).</p>
+<p>The conditional probability is then:</p>
+<div class="math notranslate nohighlight">
+\[
+P(A|B) = \frac{|AB|}{|B|}
+\]</div>
+<p><strong>Note:</strong> Here, as a shorthand for <span class="math notranslate nohighlight">\(A \cap B\)</span>, we often write <span class="math notranslate nohighlight">\(AB\)</span>.</p>
+<p>Chain Rule of Probability{rule}</p>
+<p>From the definition of conditional probability, we can directly derive the chain rule of probability:</p>
+<div class="math notranslate nohighlight">
+\[
+P(AB) = P(A|B)P(B)
+\]</div>
+<p>Law of Probability{rule}</p>
+<p>The law of probability states  that the probability of an event <span class="math notranslate nohighlight">\(A\)</span> happening is the sum of the probabilities of <span class="math notranslate nohighlight">\(AB\)</span> happening plus the probability of <span class="math notranslate nohighlight">\(A B^{c}\)</span> happening:</p>
+<div class="math notranslate nohighlight">
+\[
+P(A) = P(AB) + P(A B^c)
+\]</div>
+<p>This can be rewritten as:</p>
+<div class="math notranslate nohighlight">
+\[
+P(A) = P(A|B)P(B) + P(A|B^c)P(B^c)
+\]</div>
+<p>In other words, the probability of <span class="math notranslate nohighlight">\(A\)</span> happening is the probability of <span class="math notranslate nohighlight">\(A\)</span> given that <span class="math notranslate nohighlight">\(B\)</span> has occurred times the probability of <span class="math notranslate nohighlight">\(B\)</span> happening plus the probability of <span class="math notranslate nohighlight">\(A\)</span> given that <span class="math notranslate nohighlight">\(B\)</span> has not occurred times the probability of <span class="math notranslate nohighlight">\(B\)</span> not happening.</p>
+<p>Example{example}</p>
+<p>You have a bacteria in your gut which is causing a disease. <span class="math notranslate nohighlight">\(10\%\)</span> of these bacteria have a mutation that makes them resistant to antibiotics. After taking half a course of antibiotics, the probability of the resistant bacteria having survived is <span class="math notranslate nohighlight">\(20\%\)</span>. The probability of the non-resistant bacteria having survived is <span class="math notranslate nohighlight">\(1\%\)</span>. What is the probability of a bacteria having survived?</p>
+<p>Solution{solution}</p>
+<p>Let <span class="math notranslate nohighlight">\(A\)</span> be the event that a bacteria has survived and <span class="math notranslate nohighlight">\(B\)</span> the event that the bacteria is resistant.</p>
+<p>\begin{align*}
+P(A) &amp;= P(A|B)P(B) + P(A|B^c)P(B^c) \
+&amp;= .2 * .1 + .01 * .9 \
+&amp; = .029 \
+\end{align*}</p>
+<p>Example{example}</p>
+<p>What is the probability of a bacteria being resistant given that it has survived?</p>
+<p>Solution{solution}</p>
+<div class="math notranslate nohighlight">
+\[
+P(B|A) = P(AB) / P(A) = P(A|B)P(B) / P(A) = .2 * .1 / .029 = .6897
+\]</div>
+<p>Bayes’ Theorem{rule}</p>
+<p>Bayes’ theorem is a fundamental theorem in probability theory that describes how conditional probabilities can be reversed:</p>
+<div class="math notranslate nohighlight">
+\[
+P(B|A) = \frac{P(A|B)P(B)}{P(A)}
+\]</div>
+<p>(Proof: this follows directly from the definition of conditional probability and the chain rule of probability)</p>
+<p>We can also replace <span class="math notranslate nohighlight">\(P(A)\)</span> with the law of probability:</p>
+<div class="math notranslate nohighlight">
+\[
+P(B|A) = \frac{P(A|B)P(B)}{P(A|B)P(B) + P(A|B^c)P(B^c)}
+\]</div>
+<p>Example{example}</p>
+<p>A test is <span class="math notranslate nohighlight">\(98\%\)</span> accurate at detecting a disease (SARS). However, it has a false positive rate of <span class="math notranslate nohighlight">\(1\%\)</span>. The probability of a person having SARS is <span class="math notranslate nohighlight">\(0.5\%\)</span>.</p>
+<p>You test positive for SARS. What is the probability that you actually have SARS?</p>
+<p>Solution{solution}</p>
+<p>Let <span class="math notranslate nohighlight">\(T\)</span> be the event that you test positive and <span class="math notranslate nohighlight">\(S\)</span> the event that you have SARS.</p>
+<p>We want to calculate <span class="math notranslate nohighlight">\(P(S|T)\)</span>. We can use Bayes’ theorem:</p>
+<div class="math notranslate nohighlight">
+\[
+P(S|T) = \frac{P(T|S)P(S)}{P(T)}
+\]</div>
+<p>We already have <span class="math notranslate nohighlight">\(P(T|S) = .98\)</span> and <span class="math notranslate nohighlight">\(P(S) = .005\)</span>. We need to calculate <span class="math notranslate nohighlight">\(P(T)\)</span>. We can use the law of probability:</p>
+<div class="math notranslate nohighlight">
+\[
+P(T) = P(T|S)P(S) + P(T|S^c)P(S^c) = .98 * .005 + .01 * .995 = .0149
+\]</div>
+<p>Now we can calculate <span class="math notranslate nohighlight">\(P(S|T)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(S|T) = \frac{.98 * .005}{.0149} = .3295
+\]</div>
+<p>So the probability that you actually have SARS given that you tested positive is <span class="math notranslate nohighlight">\(32.95\%\)</span>. This is a lot lower thatn the <span class="math notranslate nohighlight">\(98\%\)</span> accuracy of the test and stems from the low base rate of the disease.</p>
+<p>Example{example}</p>
+<p>Since you are not sure if you have SARS or not even after the test, you decide to take a second test with the same accuracy and false positive rate. You test positive again. What is the probability that you actually have SARS?</p>
+<p>Solution{solution}</p>
+<p>Let <span class="math notranslate nohighlight">\(T_2\)</span> be the event that you test positive in the second test.</p>
+<p>We want to calculate <span class="math notranslate nohighlight">\(P(S|T_1, T_2)\)</span>. We can use Bayes’ theorem:</p>
+<div class="math notranslate nohighlight">
+\[
+P(S|T_1, T_2) = \frac{P(T_1, T_2|S)P(S)}{P(T_1, T_2)}
+\]</div>
+<p>We already have <span class="math notranslate nohighlight">\(P(T_1, T_2|S) = .98 * .98\)</span> and <span class="math notranslate nohighlight">\(P(S) = .005\)</span>. We need to calculate <span class="math notranslate nohighlight">\(P(T_1, T_2)\)</span>. We can use the law of probability:</p>
+<div class="math notranslate nohighlight">
+\[
+P(T_1, T_2) = P(T_1, T_2|S)P(S) + P(T_1, T_2|S^c)P(S^c) = .98 * .98 * .005 + .01 * .01 * .995 = .0049015 \approx .005
+\]</div>
+<p>Now we can calculate <span class="math notranslate nohighlight">\(P(S|T_1, T_2)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+P(S|T_1, T_2) = \frac{.98 * .98 * .005}{.005} \approx .96
+\]</div>
+<p>So the probability that you actually have SARS given that you tested positive twice is <span class="math notranslate nohighlight">\(96\%\)</span>. This is a lot higher than the probability after only doing one test.</p>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./content/courses/probability"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
