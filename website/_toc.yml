@@ -8,3 +8,12 @@ parts:
   chapters:
   - file: content/machine-learning/Classifiers
   - file: content/machine-learning/reinforcement-learning/TD-Table
+- caption: Probability Course
+  chapters:
+  - file: content/courses/probability/1 Counting
+  - file: content/courses/probability/2 Permutations
+  - file: content/courses/probability/3 Combinations
+  - file: content/courses/probability/4 Sorting
+  - file: content/courses/probability/5 What is Probability
+  - file: content/courses/probability/Games
+
